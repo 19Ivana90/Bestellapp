@@ -1,0 +1,28 @@
+.page-header
+  h1 Meine Daten bearbeiten
+
+= simple_form_for(resource, horizontal_form_options.merge(:as => resource_name, :url => registration_path(resource_name), :method => :put)) do |f|
+  = f.error_notification
+
+  fieldset
+    legend Basisdaten
+
+    = f.input :first_name
+    = f.input :last_name
+
+  fieldset
+    legend Anmeldedaten
+
+    = f.input :email, :required => true
+
+    = f.input :password, :autocomplete => 'off', :required => false, :label => 'Neues Passwort', :hint => 'Hinweis: Falls Sie Ihr aktuelles Passwort beibehalten möchten, lassen Sie dieses Feld frei!'
+    = f.input :password_confirmation, :autocomplete => 'off', :required => false, :label => 'Neues Passwort bestätigen'
+
+  fieldset
+    legend Autorisierung
+
+    = f.input :current_password, :required => true
+
+  .form-group
+    .col-md-offset-3
+      = f.button :button, 'Speichern', :class => 'btn-primary'

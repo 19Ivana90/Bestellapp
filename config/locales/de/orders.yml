@@ -1,0 +1,16 @@
+de:
+  x_orders:
+    one: "1 Bestellung"
+    other: "%{count} Bestellungen"
+
+  simple_form:
+    hints:
+      order:
+        customer_id: Freilassen wenn unbekannt.
+
+  activerecord:
+    attributes:
+      order:
+        customer_name: Kunde
+        customer_id: Kundennummer
+        country_code: Land

@@ -1,0 +1,9 @@
+- if flash[:notice].present?
+  .alert.alert-success
+    span.glyphicon.glyphicon-ok
+    = raw(flash[:notice])
+
+- if flash[:alert].present?
+  .alert.alert-danger
+    span.glyphicon.glyphicon-remove
+    = raw(flash[:alert])

@@ -1,0 +1,26 @@
+.row
+  .col-md-8.col-md-offset-2
+
+    .panel.panel-default
+      .panel-heading
+        h2.panel-title Benutzerkonto aktivieren
+
+      .panel-body
+
+        .col-md-6
+          = simple_form_for(resource, :as => resource_name, :url => update_user_confirmation_path) do |f|
+            = devise_error_messages!
+
+            = f.input :first_name
+            = f.input :last_name
+            = f.input :email, :disabled => true
+            = f.input :password
+
+            = hidden_field_tag :confirmation_token, f.object.confirmation_token
+
+            .form-group
+              = f.button :button, 'Speichern & Anmelden', :class => 'btn-primary'
+
+        .col-md-5.col-md-offset-1
+          p Bitte vervollständigen Sie Ihre Daten.
+          p Hinweis: Das Passwort muss aus mindestens 8 Zeichen bestehen.

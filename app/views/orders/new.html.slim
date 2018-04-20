@@ -1,0 +1,9 @@
+= simple_form_for @order, horizontal_form_options do |f|
+  fieldset
+    legend Neue Bestellung
+    = f.input :customer_name, as: :string
+    = f.input :customer_id, as: :string
+    = f.input :country_code, collection: COUNTRIES
+
+    .col-md-offset-3
+      = f.button :button, 'Anlegen', class: 'btn-primary'

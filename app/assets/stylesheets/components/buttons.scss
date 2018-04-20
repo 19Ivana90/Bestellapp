@@ -1,0 +1,9 @@
+.btn {
+  .glyphicon + span {
+    margin-left: 0.5em;
+  }
+}
+
+.btn + .btn {
+  margin-left: 0.25em;
+}

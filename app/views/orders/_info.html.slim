@@ -1,0 +1,7 @@
+ul.list-unstyled
+  li Kunde: #{order.customer_name}
+  li Kundennummer: #{order.customer_id}
+  li Land: #{order.country_name}
+  li Angelegt: #{l(order.created_at.to_date)}
+  - if order.placed?
+    li Bestelldatum: #{l(order.placed_at.to_date)}

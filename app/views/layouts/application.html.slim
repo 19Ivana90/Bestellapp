@@ -1,0 +1,60 @@
+doctype html
+html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de"
+  head
+    meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+
+    title Kreis Industriehandel GmbH
+
+    = csrf_meta_tags
+    = action_cable_meta_tag
+
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+
+  body
+    header.navbar.navbar-default.navbar-fixed-top.navbar-collapse
+      .container
+        .navbar-header
+          = link_to 'Kreis', root_url, :class => 'navbar-brand'
+
+          button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="false" aria-controls="navbar"
+            span.sr-only Navigation ein-/ausklappen
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+
+        - if user_signed_in?
+          #main-nav.navbar-collapse.collapse
+            ul.nav.navbar-nav
+              li class="dropdown #{'active' if controller_path == 'orders'}"
+                = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+                  ' Bestellungen
+                  b.caret
+                ul.dropdown-menu
+                  li class="#{'active' if controller_path == 'orders' && action_name == 'index'}" = link_to 'Offen', [:orders]
+                  li class="#{'active' if controller_path == 'orders' && action_name == 'placed'}" = link_to 'Erledigt', [:placed, :orders]
+
+              - if current_user.admin?
+                li class="dropdown #{'active' if controller_path.in?(['users', 'admin/orders'])}"
+                  = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+                    ' Admin
+                    b.caret
+                  ul.dropdown-menu
+                    li class="#{'active' if controller_name == 'users'}" = link_to 'Benutzer', :users
+                    li.divider role="separator"
+                    li class="#{'active' if controller_path == 'admin/orders' && action_name == 'index'}" = link_to 'Offene Bestellungen', [:admin, :orders]
+                    li class="#{'active' if controller_path == 'admin/orders' && action_name == 'accepted'}" = link_to 'Erledigte Bestellungen', [:accepted, :admin, :orders]
+
+              - if @order.present? && !@order.placed?
+                li
+                  = link_to @order do
+                    span.glyphicon.glyphicon-shopping-cart>
+                    = pluralize(@order.line_items_count, 'Produkt', plural: 'Produkte')
+
+    .container
+      = render 'layouts/flash'
+
+      = yield
+
+    = render 'layouts/footer'

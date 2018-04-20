@@ -1,0 +1,9 @@
+footer
+  nav.navbar.navbar-default.navbar-fixed-bottom
+    .container
+      - if user_signed_in?
+        .user-info.pull-left User: <strong>#{current_user.full_name}</strong>
+
+        ul.nav.navbar-nav.pull-right
+          li = link_to 'Meine Daten', edit_user_registration_path
+          li = link_to 'Abmelden', destroy_user_session_path, method: :delete

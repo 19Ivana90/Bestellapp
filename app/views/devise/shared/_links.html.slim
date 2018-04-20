@@ -1,0 +1,17 @@
+h3 style="margin-top:0;" Probleme?
+
+- if controller_name != 'sessions'
+  = link_to 'Anmelden', new_session_path(resource_name)
+  br
+
+- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+  = link_to 'Passwort vergessen?', new_password_path(resource_name)
+  br
+
+- if devise_mapping.confirmable? && controller_name != 'confirmations'
+  = link_to 'Freischaltungs-E-Mail nicht erhalten?', new_confirmation_path(resource_name)
+  br
+
+- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+  = link_to 'Entsperrungs-E-Mail nicht erhalten?', new_unlock_path(resource_name)
+  br

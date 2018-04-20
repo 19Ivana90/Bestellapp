@@ -1,0 +1,25 @@
+@import "bootstrap";
+
+@import "components/*";
+@import "modules/*";
+
+body { margin: 70px 0; }
+
+.page-header {
+  margin-top: 0;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 1.25em;
+}
+
+h2 {
+  font-size: 1.25em;
+}
+
+th, td {
+  &.number {
+    text-align: right;
+  }
+}

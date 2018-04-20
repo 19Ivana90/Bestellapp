@@ -1,0 +1,5 @@
+<%= @accepter.first_name %> <%= @accepter.last_name %> hat <%= t(:x_orders, count: @orders.count) %> angenommen.
+
+<%- @orders.each do |order| -%>
+Bestellung <%= order.number %>: <%= order_url(order) %>
+<%- end -%>

@@ -1,0 +1,24 @@
+.row
+  .col-md-8.col-md-offset-2
+
+    .panel.panel-default
+      .panel-heading
+        h2.panel-title Anmelden
+
+      .panel-body
+
+        .col-md-6
+          = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :id => 'user-login' }) do |f|
+            = f.input :email, :required => false, :autofocus => true
+            = f.input :password, :required => false
+
+            - if devise_mapping.rememberable?
+              .checkbox
+                label
+                  = f.check_box :remember_me
+                  = t('simple_form.labels.user.remember_me')
+
+            = f.button :button, 'Anmelden', :class => 'btn-primary'
+
+        .col-md-5.col-md-offset-1
+          = render 'devise/shared/links'

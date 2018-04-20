@@ -1,0 +1,42 @@
+.page-header
+  nav.pull-right
+    - if current_user.admin? && @order.accepted?
+      = link_button_with_icon 'Exportieren', :download, admin_order_path(@order, :dta)
+  h1 Bestellung
+
+= render 'orders/info', order: @order
+
+#cart
+  - if @order.line_items.any?
+    = form_for @order do |f|
+      table.table.table-striped.table-condensed
+        thead
+          tr
+            th.quantity.number Menge
+            th Produkt
+            th.product-sku Artikelnummer
+            th.product-carton-size.number Stk./Karton
+            th.line-item--delete Löschen
+        tbody
+          - @order.line_items.each do |line_item|
+            = f.fields_for :line_items, line_item do |lif|
+              tr
+                td.number.quantity
+                  span.line-item--quantity #{line_item.quantity}
+                  = lif.number_field :quantity, min: 1, class: 'line-item--quantity-input'
+                  |&nbsp;x
+                td = line_item.product_name
+                td.product-sku = line_item.product_sku
+                td.product-carton-size.number = line_item.product_carton_size
+                td.line-item--delete = lif.check_box :_destroy
+  - else
+    p Diese Bestellung hat noch keine Produkte.
+
+  - if @order.editable?
+    .btn-group.pull-right
+      - if @order.line_items.any?
+        = button_with_icon 'Bearbeiten', :pencil, size: :xs, options: { id: 'edit-cart' } if @order.line_items.any?
+        = button_with_icon 'Speichern', :ok, size: :sm, options: { id: 'update-cart', class: 'btn-primary' }
+        = button_with_icon 'Abbrechen', :'ban-circle', size: :sm, options: { id: 'cancel-edit-cart' }
+      = link_button_with_icon 'Produkte hinzufügen', :plus, [:edit, @order], size: :xs
+      = link_button_with_icon 'Abschließen', :ok, [:place, @order], size: :xs, options: { class: 'btn-primary', method: :put, data: { confirm: 'Bestellung wirklich abschließen? Die Bestellung kann anschließend nicht mehr verändert werden.' } }

@@ -1,0 +1,20 @@
+.page-header
+  nav.btn-group.pull-right
+    = link_button_with_icon 'Bearbeiten', :pencil, [:edit, @user] if current_user.admin?
+  h1 = @user.full_name
+
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        h3.panel-title Zugang
+
+      .panel-body
+        ul.list-unstyled
+          li = labeled_icon :envelope, @user.email
+          li = labeled_icon :user, @user.role.humanize
+          - if @user.confirmed?
+            li = labeled_icon :ok, "Konto bestätigt am #{l(@user.confirmed_at)}"
+            li = labeled_icon :off, "Letzte Anmeldung: #{@user.current_sign_in_at.present? ? l(@user.current_sign_in_at) : 'nie'}"
+          - else
+            li = labeled_icon :remove, 'Konto noch nicht bestätigt!'

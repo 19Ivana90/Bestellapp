@@ -1,0 +1,26 @@
+.page-header
+  = link_button_with_icon 'Neue Bestellung', :plus, [:new, :order], options: { class: 'pull-right' }
+  h1 Bestellungen
+
+ul.nav.nav-tabs
+  li class="#{'active' if current_page?(root_path) || current_page?(action: 'index')}" = link_to 'Offen', [:orders]
+  li class="#{'active' if current_page?(action: 'placed')}" = link_to 'Erledigt', [:placed, :orders]
+
+table.table.table-striped
+  thead
+    tr
+      th Bestnr.
+      th Kunde
+      th Land
+      th.number Produkte
+  tbody
+    - if @orders.any?
+        - @orders.each do |order|
+          tr
+            td = link_to order.id, order
+            td = order.customer_name_and_id
+            td = order.country_name
+            td.number = order.line_items_count
+    - else
+      tr
+        td colspan="4" Bisher keine Bestellungen.

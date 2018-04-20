@@ -1,0 +1,21 @@
+.row
+  .col-md-8.col-md-offset-2
+
+    .panel.panel-default
+      .panel-heading
+        h2.panel-title Entsperrungs-E-Mail anfordern
+
+      .panel-body
+
+        .col-md-6
+          = simple_form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :method => :post) do |f|
+            = f.error_notification
+            = f.full_error :unlock_token
+
+            = f.input :email, :required => true, :autofocus => true
+
+            .form-group
+              = f.button :button, 'Entsperrungs-E-Mail anfordern', :class => 'btn-primary'
+
+        .col-md-5.col-md-offset-1
+          = render 'devise/shared/links'

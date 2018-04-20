@@ -1,0 +1,39 @@
+.page-header
+  h1 Bestellung
+
+= render 'info', order: @order
+
+h2 Produkte hinzufügen
+
+= form_tag [:edit, @order], method: :get, class: 'form-inline pull-right' do
+  .form-group
+    .input-group
+      = text_field_tag :q, params[:q], placeholder: 'Suchbegriff', class: 'form-control'
+      span.input-group-btn
+        button.btn.btn-primary.btn-block Suchen
+
+- if @products.any?
+  = form_for @order do |f|
+    table#products.table.table-striped
+      thead
+        tr
+          th.quantity Menge
+          th Produkt
+          th.product-sku Art.-Nr.
+          th.carton-size.number Stk./Karton
+
+      tbody
+        - @products.each do |product|
+          = f.fields_for :line_items, LineItem.new(product: product) do |lif|
+            tr.product
+              td.quantity
+                = lif.hidden_field :product_id
+                => lif.number_field :quantity, min: 1, class: 'line-item--quantity-input'
+                | x
+              td = product.name
+              td.product-sku = product.sku_for(@order.country_code)
+              td.carton-size.number = product.carton_size
+
+    = button_with_icon 'Produkte hinzufügen', :ok, options: { class: 'btn-primary', type: 'submit' }
+- elsif params[:q].present?
+  p Keine Produkte mit dem Suchbegriff „#{params[:q]}“ gefunden.

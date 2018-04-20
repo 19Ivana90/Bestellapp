@@ -1,0 +1,3 @@
+ul.nav.nav-tabs
+  li class="#{'active' if current_page?(action: 'index')}" = link_to 'Offen', [:admin, :orders]
+  li class="#{'active' if current_page?(action: 'accepted')}" = link_to 'Erledigt', [:accepted, :admin, :orders]

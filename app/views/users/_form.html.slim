@@ -1,0 +1,21 @@
+= simple_form_for(@user, horizontal_form_options) do |f|
+  = f.error_notification
+
+  fieldset
+    legend Basisdaten
+
+    = f.input :first_name
+    = f.input :last_name
+
+  fieldset
+    legend Anmeldedaten
+
+    = f.input :email, required: true
+
+  fieldset
+    legend Rechte
+
+    = f.input :role, as: :radio_buttons, collection: User.all_roles.map(&:to_sym), label_html_options: { class: 'radio-inline' }
+
+  .form-group
+    .col-sm-offset-3 = button_with_icon 'Speichern', :ok, options: { type: 'submit', class: 'btn-primary' }

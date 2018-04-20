@@ -1,0 +1,29 @@
+de:
+  simple_form:
+    labels:
+      user:
+        remember_me: Angemeldet bleiben
+
+    options:
+      user:
+        role:
+          admin: Admin
+          user: Standard
+
+    hints:
+      user:
+        current_password: "Das aktuelle Passwort wird benötigt, um die Änderungen zu speichern!"
+
+  activerecord:
+    models:
+      user: Benutzer
+
+    attributes:
+      user:
+        first_name: Vorname
+        last_name: Nachname
+        email: E-Mail
+        password: Passwort
+        password_confirmation: Passwortbestätigung
+        current_password: Aktuelles Passwort
+        role: Rolle

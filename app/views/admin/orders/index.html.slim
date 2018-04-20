@@ -1,0 +1,32 @@
+.page-header
+  h1 Offene Bestellungen
+
+= render 'nav'
+
+= form_tag [:accept, :admin, :orders], method: :put do
+  table.table.table-striped
+    thead
+      tr
+        th Bestnr.
+        th Kunde
+        th Kundennummer
+        th Land
+        th.number Produkte
+    tbody
+      - if @orders.any?
+          - @orders.each_with_index do |order, i|
+            = fields_for :orders, order, index: i do |of|
+              tr
+                td = link_to order.id, [:admin, order]
+                td = order.customer_name
+                td
+                  = of.hidden_field :id
+                  = of.text_field :customer_id
+                td = order.country_name
+                td.number = order.line_items_count
+      - else
+        tr
+          td colspan="5" Aktuell keine offenen Bestellungen.
+
+  - if @orders.any?
+    = button_with_icon 'Bestellung(en) annehmen', :ok, options: { class: 'btn-primary', type: 'submit' }

@@ -1,0 +1,27 @@
+.page-header
+  nav.pull-right
+    = link_button_with_icon 'Alle exportieren', :download, accepted_admin_orders_path(:dta)
+  h1 Erledigte Bestellungen
+
+= render 'nav'
+
+table.table.table-striped
+  thead
+    tr
+      th Bestnr.
+      th Kunde
+      th Land
+      th.number Produkte
+      th
+  tbody
+    - if @orders.any?
+        - @orders.each do |order|
+          tr
+            td = link_to order.id, [:admin, order]
+            td = order.customer_name_and_id
+            td = order.country_name
+            td.number = order.line_items_count
+            td = link_button_with_icon 'Exportieren', :download, admin_order_path(order, :dta), size: :xs
+    - else
+      tr
+        td colspan="4" Bisher keine erledigten Bestellungen.
